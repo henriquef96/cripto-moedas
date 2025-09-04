@@ -6,7 +6,7 @@ export function Header() {
   return (
     <header className={styles.container}>
       <Link to="/">
-        <img src={logo} alt="Logo Cripto Moedas" />
+        <img className={styles.logo} src={logo} alt="Logo Cripto Moedas" />
       </Link>
     </header>
   );
