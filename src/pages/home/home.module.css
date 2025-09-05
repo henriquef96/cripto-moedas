@@ -12,11 +12,16 @@
 .form input {
     background-color: #20212c;
     width: 100%;
-    border: none;
+    border: 1px solid transparent;
     border-radius: 10px;
     padding: 10px;
     outline: none;
     color: rgb(175, 175, 175);
+    transition: 0.3s;
+}
+
+.form input:focus {
+    border: 1px solid rgba(98, 197, 255, 0.5);
 }
 
 .form button {
@@ -27,6 +32,63 @@
 
 .form button:hover {
     color: rgb(225, 225, 225);
-    rotate: 25deg;
     scale: 1.2;
+}
+
+table {
+    margin-top: 50px;
+    border-collapse: separate;
+    border-spacing: 0 14px;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table caption {
+    font-size: 16px;
+    margin: 0.5em 0.75em;
+}
+
+th {
+    color: white;
+}
+
+.row {
+    background-color: #20212c;
+    color: white;
+}
+
+td:first-child,
+th:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+td:last-child,
+th:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+table th,
+table td {
+    padding: 14px;
+    text-align: center;
+}
+
+.tdlabel {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.tdProfit {
+    color: #12f98a;
+    font-weight: bold;
+}
+
+.tdLoss {
+    color: #f91257;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 600px){
+
 }

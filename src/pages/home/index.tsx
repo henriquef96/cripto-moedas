@@ -33,39 +33,13 @@ export function Home() {
                             </div>
                         </td>
 
+                        <td className={styles.tdlabel} data-label="Valor">1T</td>
 
-                        <td className={styles.tdlabel} data-label="Valor">
-                            <div className={styles.name}>
-                                <Link to="/details/bitcoin">
-                                    <span>1T</span>
-                                </Link>
-                            </div>
-                        </td>
+                        <td className={styles.tdlabel} data-label="Preço">8.000</td>
 
-                        <td className={styles.tdlabel} data-label="Preço">
-                            <div className={styles.name}>
-                                <Link to="/details/bitcoin">
-                                    <span>8.000</span>
-                                </Link>
-                            </div>
-                        </td>
+                        <td className={styles.tdlabel} data-label="Volume">2B</td>
 
-                        <td className={styles.tdlabel} data-label="Volume">
-                            <div className={styles.name}>
-                                <Link to="/details/bitcoin">
-                                    <span>2B</span>
-                                </Link>
-                            </div>
-                        </td>
-
-                        <td className={styles.tdlabel} data-label="Mudança 24h">
-                            <div className={styles.name}>
-                                <Link to="/details/bitcoin">
-                                    <span>1.20%</span>
-                                </Link>
-                            </div>
-                        </td>
-
+                        <td className={styles.tdProfit} data-label="Mudança 24h">1.20%</td>
                     </tr>
                 </tbody>
             </table>
