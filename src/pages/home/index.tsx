@@ -1,13 +1,22 @@
-import { Link } from 'react-router-dom'
+import { useState, FormEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './home.module.css'
 import { BsSearch } from 'react-icons/bs'
 
 export function Home() {
+    const [input, setInput] = useState("");
+    const navigate = useNavigate();
+
+    function handleSubmit(e: FormEvent) {
+        e.preventDefault();
+        if (!input) return;
+        navigate(`/detail/${input}`);
+    }
 
     return (
         <main className={styles.container}>
-            <form action="" className={styles.form}>
-                <input type="text" placeholder='Digite o nome da moeda... Ex Bitcoin' />
+            <form action="" className={styles.form} onSubmit={handleSubmit}>
+                <input type="text" placeholder='Digite o nome da moeda... Ex Bitcoin' value={input} onChange={(e) => setInput(e.target.value)} />
                 <button type='submit'>
                     <BsSearch size={30} />
                 </button>
@@ -15,16 +24,17 @@ export function Home() {
 
             <table>
                 <thead>
-                    <th scope='col'>Moeda</th>
-                    <th scope='col'>Valor</th>
-                    <th scope='col'>Preço</th>
-                    <th scope='col'>Volume</th>
-                    <th scope='col'>Mudança 24h</th>
+                    <tr>
+                        <th scope='col'>Moeda</th>
+                        <th scope='col'>Valor</th>
+                        <th scope='col'>Preço</th>
+                        <th scope='col'>Volume</th>
+                        <th scope='col'>Mudança 24h</th>
+                    </tr>
                 </thead>
 
                 <tbody id='tbody'>
                     <tr className={styles.row}>
-
                         <td className={styles.tdlabel} data-label="Moeda">
                             <div className={styles.name}>
                                 <Link to="/details/bitcoin">
@@ -43,6 +53,10 @@ export function Home() {
                     </tr>
                 </tbody>
             </table>
+
+            <button className={styles.loadMore}>
+                Carregar mais...
+            </button>
         </main>
     )
 } 

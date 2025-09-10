@@ -27,12 +27,12 @@
 .form button {
     background-color: transparent;
     color: rgb(175, 175, 175);
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 .form button:hover {
     color: rgb(225, 225, 225);
-    scale: 1.2;
+    scale: 1.1;
 }
 
 table {
@@ -89,6 +89,21 @@ table td {
     font-weight: bold;
 }
 
+.loadMore {
+    background-color: transparent;
+    border: 1px solid rgba(98, 197, 255, 0.5);
+    color: rgba(98, 197, 255, 0.5);
+    padding: 8px 24px;
+    border-radius: 8px;
+    margin: 14px;
+    transition: 0.3s;
+}
+
+.loadMore:hover {
+    border: 1px solid rgba(98, 197, 255, 0.8);
+    color: rgba(98, 197, 255, 0.8);
+}
+
 @media screen and (max-width: 600px) {
     table {
         border: 0;
@@ -121,7 +136,6 @@ table td {
         content: attr(data-label);
         float: left;
         font-weight: bold;
-        text-transform: uppercase;
     }
 
     table td:last-child {
