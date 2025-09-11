@@ -3,12 +3,31 @@ import { useState, type FormEvent, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
 
+interface CoinProps {
+    id: string;
+    name: string;
+    symbol: string;
+    priceUsd: string;
+    vwap24Hr: string;
+    changePercent24Hr: string;
+    rank: string;
+    supply: string;
+    maxSupply: string;
+    marketCapUsd: string;
+    volumeUsd24Hr: string;
+    explorer: string;
+}
+
+interface DataProp{
+    data: CoinProps[];
+}
+
 export function Home() {
     const [input, setInput] = useState("");
     const navigate = useNavigate();
-    const [coins, setCoins] = useState([]);
+    const [coins, setCoins] = useState<CoinProps[]>([]);
 
-    useEffect(() => {getData()}, []);
+    useEffect(() => { getData() }, []);
 
     async function getData() {
         fetch("https://rest.coincap.io/v3/assets?limit=10&offset=0&apiKey=fbf456fe3c49b2e069911557a8059abf15856fcf63e59ad6421cc3a4af1dd16c")
