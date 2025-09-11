@@ -91,17 +91,18 @@ table td {
 
 .loadMore {
     background-color: transparent;
-    border: 1px solid rgba(98, 197, 255, 0.5);
-    color: rgba(98, 197, 255, 0.5);
-    padding: 8px 24px;
-    border-radius: 8px;
-    margin: 14px;
+    border: 1px solid rgba(98, 197, 255, 0.8);
+    color: rgba(98, 197, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
     transition: 0.3s;
+    margin-top: 50px;
 }
 
 .loadMore:hover {
-    border: 1px solid rgba(98, 197, 255, 0.8);
-    color: rgba(98, 197, 255, 0.8);
+    background-color: rgba(98, 197, 255);
+    border: 1px solid transparent;
+    color: #18171c;
 }
 
 @media screen and (max-width: 600px) {

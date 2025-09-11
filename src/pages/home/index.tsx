@@ -1,16 +1,31 @@
-import { useState, FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import styles from './home.module.css'
+import { useState, type FormEvent, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
 
 export function Home() {
     const [input, setInput] = useState("");
     const navigate = useNavigate();
+    const [coins, setCoins] = useState([]);
+
+    useEffect(() => {getData()}, []);
+
+    async function getData() {
+        fetch("https://rest.coincap.io/v3/assets?limit=10&offset=0&apiKey=fbf456fe3c49b2e069911557a8059abf15856fcf63e59ad6421cc3a4af1dd16c")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            });
+    }
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
         if (!input) return;
         navigate(`/detail/${input}`);
+    }
+
+    function handleLoadMore() {
+        console.log('load more')
     }
 
     return (
@@ -54,9 +69,10 @@ export function Home() {
                 </tbody>
             </table>
 
-            <button className={styles.loadMore}>
+            <button className={styles.loadMore} onClick={handleLoadMore}>
                 Carregar mais...
             </button>
         </main>
     )
-} 
+}
+
