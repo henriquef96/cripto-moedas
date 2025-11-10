@@ -16,9 +16,12 @@ interface CoinProps {
     marketCapUsd: string;
     volumeUsd24Hr: string;
     explorer: string;
+    formatedPrice?: string;
+    formatedMarketCap?: string;
+    formatedVolume?: string;
 }
 
-interface DataProp{
+interface DataProp {
     data: CoinProps[];
 }
 
@@ -32,9 +35,33 @@ export function Home() {
     async function getData() {
         fetch("https://rest.coincap.io/v3/assets?limit=10&offset=0&apiKey=fbf456fe3c49b2e069911557a8059abf15856fcf63e59ad6421cc3a4af1dd16c")
             .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            });
+            .then((data: DataProp) => {
+
+                const coinsData = data.data;
+
+                const price = Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                })
+
+                const priceCompact = Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    notation: 'compact',
+                })
+
+                const formatedResult = coinsData.map((item) => {
+                    const formated = {
+                        ...item,
+                        formatedPrice: price.format(Number(item.priceUsd)),
+                        formatedMarketCap: priceCompact.format(Number(item.marketCapUsd)),
+                        formatedVolume: priceCompact.format(Number(item.volumeUsd24Hr)),
+                    }
+                    return formated;
+                })
+                // console.log(formatedResult);
+                setCoins(formatedResult);
+            })
     }
 
     function handleSubmit(e: FormEvent) {
@@ -68,23 +95,29 @@ export function Home() {
                 </thead>
 
                 <tbody id='tbody'>
-                    <tr className={styles.row}>
-                        <td className={styles.tdlabel} data-label="Moeda">
-                            <div className={styles.name}>
-                                <Link to="/details/bitcoin">
-                                    <span>Bitcoin</span> | BTC
-                                </Link>
-                            </div>
-                        </td>
 
-                        <td className={styles.tdlabel} data-label="Valor">1T</td>
+                    {coins.length > 0 && coins.map((item) => (
+                        <tr className={styles.row} key={item.id}>
+                            <td className={styles.tdlabel} data-label="Moeda">
+                                <div className={styles.name}>
+                                    <img src={`https://assets.coincap.io/assets/icons/${item.symbol.toLocaleLowerCase()}@2x.png`} alt="Logo Cripto" className={styles.logo}/>
+                                    <Link to="/details/bitcoin">
+                                        <span>{item.name}</span> | {item.symbol}
+                                    </Link>
+                                </div>
+                            </td>
 
-                        <td className={styles.tdlabel} data-label="Preço">8.000</td>
+                            <td className={styles.tdlabel} data-label="Valor">{item.formatedMarketCap}</td>
 
-                        <td className={styles.tdlabel} data-label="Volume">2B</td>
+                            <td className={styles.tdlabel} data-label="Preço">{item.formatedPrice}</td>
 
-                        <td className={styles.tdProfit} data-label="Mudança 24h">1.20%</td>
-                    </tr>
+                            <td className={styles.tdlabel} data-label="Volume">{item.formatedVolume}</td>
+
+                            <td className={Number(item.changePercent24Hr) > 0 ? styles.tdProfit : styles.tdLoss} data-label="Mudança 24h"><span>{item.changePercent24Hr.slice(0, 5)}%</span>
+                            </td>
+                        </tr>
+                    ))}
+
                 </tbody>
             </table>
 

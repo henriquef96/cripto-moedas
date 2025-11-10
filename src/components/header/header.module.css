@@ -1,4 +1,4 @@
-.container{
+.container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6,6 +6,17 @@
     max-width: 1080px;
 }
 
-.logo{
+.titulo {
+    color: rgb(40, 129, 180);
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+.subTitulo {
+    color: rgba(197, 197, 197, 0.9);
+}
+
+.logo {
     margin-top: 50px;
 }
