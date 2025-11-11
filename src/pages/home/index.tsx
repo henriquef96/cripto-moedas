@@ -29,13 +29,16 @@ export function Home() {
     const [input, setInput] = useState("");
     const navigate = useNavigate();
     const [coins, setCoins] = useState<CoinProps[]>([]);
+    const [offset, setOffset] = useState(0);
 
-    useEffect(() => { getData() }, []);
+    useEffect(() => { getData() }, [offset]);
 
     async function getData() {
-        fetch("https://rest.coincap.io/v3/assets?limit=10&offset=0&apiKey=fbf456fe3c49b2e069911557a8059abf15856fcf63e59ad6421cc3a4af1dd16c")
+        fetch(`https://rest.coincap.io/v3/assets?limit=10&offset=${offset}&apiKey=fbf456fe3c49b2e069911557a8059abf15856fcf63e59ad6421cc3a4af1dd16c`)
             .then(response => response.json())
             .then((data: DataProp) => {
+
+                console.log(offset);
 
                 const coinsData = data.data;
 
@@ -59,8 +62,8 @@ export function Home() {
                     }
                     return formated;
                 })
-                // console.log(formatedResult);
-                setCoins(formatedResult);
+                const listCoin = [...coins, ...formatedResult]
+                setCoins(listCoin);
             })
     }
 
@@ -71,7 +74,11 @@ export function Home() {
     }
 
     function handleLoadMore() {
-        console.log('load more')
+        if (offset == 0) {
+            setOffset(10)
+            return;
+        }
+        setOffset(offset + 10);
     }
 
     return (
@@ -100,9 +107,10 @@ export function Home() {
                         <tr className={styles.row} key={item.id}>
                             <td className={styles.tdlabel} data-label="Moeda">
                                 <div className={styles.name}>
-                                    <img src={`https://assets.coincap.io/assets/icons/${item.symbol.toLocaleLowerCase()}@2x.png`} alt="Logo Cripto" className={styles.logo}/>
+                                    <img src={`https://assets.coincap.io/assets/icons/${item.symbol.toLocaleLowerCase()}@2x.png`} alt="Logo Cripto" className={styles.logo} />
                                     <Link to="/details/bitcoin">
-                                        <span>{item.name}</span> | {item.symbol}
+                                        <span>{item.name}</span>
+                                        {/* | {item.symbol} */}
                                     </Link>
                                 </div>
                             </td>
