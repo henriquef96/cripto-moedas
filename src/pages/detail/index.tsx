@@ -12,6 +12,7 @@ export function Detail() {
     const { cripto } = useParams()
     const navigate = useNavigate()
     const [coinData, setCoinData] = useState<ApiCoin | null>(null)
+    console.log(coinData)
 
     useEffect(() => {
         async function getCoin() {
