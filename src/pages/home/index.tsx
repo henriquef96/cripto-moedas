@@ -38,8 +38,6 @@ export function Home() {
             .then(response => response.json())
             .then((data: DataProp) => {
 
-                console.log(offset);
-
                 const coinsData = data.data;
 
                 const price = Intl.NumberFormat('en-US', {
@@ -108,9 +106,8 @@ export function Home() {
                             <td className={styles.tdlabel} data-label="Moeda">
                                 <div className={styles.name}>
                                     <img src={`https://assets.coincap.io/assets/icons/${item.symbol.toLocaleLowerCase()}@2x.png`} alt="Logo Cripto" className={styles.logo} />
-                                    <Link to="/details/bitcoin">
-                                        <span>{item.name}</span>
-                                        {/* | {item.symbol} */}
+                                    <Link to="/detail" className={styles.link}>
+                                        <span>{item.name}</span> | {item.symbol}
                                     </Link>
                                 </div>
                             </td>

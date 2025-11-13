@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 export function Header() {
   return (
     <header className={styles.container}>
-      <Link to="/">
+      <Link to="/cripto-moedas">
         <h1 className={styles.titulo}><span className={styles.subTitulo}>Cripto </span>Moedas</h1>
       </Link>
     </header>
