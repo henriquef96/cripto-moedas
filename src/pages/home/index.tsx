@@ -105,8 +105,10 @@ export function Home() {
                         <tr className={styles.row} key={item.id}>
                             <td className={styles.tdlabel} data-label="Moeda">
                                 <div className={styles.name}>
-                                    <img src={`https://assets.coincap.io/assets/icons/${item.symbol.toLocaleLowerCase()}@2x.png`} alt="Logo Cripto" className={styles.logo} />
-                                    <Link to={`/detail/${item.id}`} className={styles.link}>
+                                    <Link to={`/cripto-moedas/detail/${item.id}`} className={styles.link}>
+                                        <img src={`https://assets.coincap.io/assets/icons/${item.symbol.toLocaleLowerCase()}@2x.png`} alt="Logo Cripto" className={styles.logo} />
+                                    </Link>
+                                    <Link to={`/cripto-moedas/detail/${item.id}`} className={styles.link}>
                                         <span>{item.name}</span> | {item.symbol}
                                     </Link>
                                 </div>

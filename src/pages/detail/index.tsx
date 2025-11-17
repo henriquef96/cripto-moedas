@@ -71,7 +71,7 @@ export function Detail() {
 
                 const resultData: ApiCoin = {
                     brl: String(coin.current_price ?? 0),
-                    brl_24h_change: String(coin.price_change_percentage_24h ?? 0),
+                    brl_24h_change: ((coin.price_change_percentage_24h ?? 0)).toFixed(2),
                     brl_24h_vol: String(coin.total_volume ?? 0),
                     brl_market_cap: String(coin.market_cap ?? 0),
                     formatedPrice: price.format(coin.current_price ?? 0),
@@ -126,6 +126,10 @@ export function Detail() {
         )
     }
 
+    const changeValue = Number(coinData?.brl_24h_change ?? 0)
+    const changeText = `${changeValue > 0 ? '+' : ''}${changeValue.toFixed(2)}%`
+    const changeColor = changeValue > 0 ? '#43a047' : '#e53935'
+
     return (
         <div className={styles.container}>
             <div className={styles.card}>
@@ -136,12 +140,15 @@ export function Detail() {
                         className={styles.logo}
                     />
                     <span className={styles.title}>{coinName ?? cripto}</span><br />
-
                 </div>
                 <div className={styles.info}>
-                    <span className={styles.info}><b>Preço:</b> {coinData?.formatedPrice}</span><br />
-                    <span className={styles.info}><b>Valor:</b> {coinData?.formatedMarketCap}</span><br />
+                    <span className={styles.info}><b>Preço:</b> {coinData?.formatedPrice}</span>
+                    <span className={styles.info}><b>Valor:</b> {coinData?.formatedMarketCap}</span>
                     <span className={styles.info}><b>Volume:</b> {coinData?.formatedVolume}</span>
+                    <span className={styles.info}>
+                        <b>Variação 24h: </b>
+                        <span style={{ color: changeColor }}>{changeText}</span>
+                    </span>
                 </div>
             </div>
         </div>

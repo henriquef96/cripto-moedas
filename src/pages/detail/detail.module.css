@@ -30,6 +30,13 @@
     width: 30px;
     height: 30px;
     margin-right: 10px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.logo:hover {
+    transform: scale(1.5);
+    rotate: 30deg;
 }
 
 .title {
@@ -38,6 +45,7 @@
 }
 
 .info {
+        font-size: 18px;
     display: block;
+    margin: 5px 0;
 }
-
