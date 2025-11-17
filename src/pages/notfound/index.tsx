@@ -4,7 +4,7 @@ export function Notfound() {
 
     return (
         <div className={styles.info}>
-            <h1>Erro 404, esta página não existe!</h1>
+            <h1>Esta página não existe!</h1>
         </div>
     )
 }

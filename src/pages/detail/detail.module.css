@@ -1,0 +1,38 @@
+.loading {
+    text-align: center;
+    margin-top: 10%;
+    color: #d3d3d3;
+    font-size: 12px;
+}
+
+.card {
+    background-color: #20212c;
+    color: #B4B4B5;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.info {
+    display: block;
+}
+

@@ -1,18 +1,34 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import styles from './detail.module.css'
+
+type ApiCoinResponse = {
+    id: string
+    symbol: string
+    name: string
+    current_price: number
+    market_cap: number
+    total_volume: number
+    price_change_percentage_24h?: number
+}
 
 type ApiCoin = {
-    brl: number
-    brl_24h_change: number
-    brl_24h_vol: number
-    brl_market_cap: number
+    brl: string
+    brl_24h_change: string
+    brl_24h_vol: string
+    brl_market_cap: string
+    formatedPrice: string
+    formatedMarketCap: string
+    formatedVolume: string
 }
 
 export function Detail() {
-    const { cripto } = useParams()
+    const { cripto } = useParams<{ cripto: string }>()
     const navigate = useNavigate()
     const [coinData, setCoinData] = useState<ApiCoin | null>(null)
-    console.log(coinData)
+    const [loading, setLoading] = useState(true)
+    const [symbol, setSymbol] = useState<string | null>(null)
+    const [coinName, setCoinName] = useState<string | null>(null)
 
     useEffect(() => {
         async function getCoin() {
@@ -20,6 +36,8 @@ export function Detail() {
                 navigate('/')
                 return
             }
+
+            setLoading(true)
 
             const price = Intl.NumberFormat('pt-BR', {
                 style: 'currency',
@@ -32,32 +50,96 @@ export function Detail() {
                 notation: 'compact',
             })
 
-            const res = await fetch(
-                `https://api.coingecko.com/api/v3/simple/price?ids=${cripto}&vs_currencies=brl&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true`
-            )
-            const data = (await res.json()) as Record<string, ApiCoin>
+            try {
+                const res = await fetch(
+                    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=brl&ids=${cripto}&per_page=1&page=1&sparkline=false&price_change_percentage=24h`
+                )
 
-            const coin = data[cripto]
+                if (!res.ok) throw new Error('Erro na requisição')
 
-            if (!coin || Object.keys(coin).length === 0) {
+                const data = (await res.json()) as ApiCoinResponse[]
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    navigate('/')
+                    return
+                }
+
+                const coin = data[0]
+
+                setSymbol(coin.symbol ?? cripto ?? null)
+                setCoinName(coin.name ?? cripto ?? null)
+
+                const resultData: ApiCoin = {
+                    brl: String(coin.current_price ?? 0),
+                    brl_24h_change: String(coin.price_change_percentage_24h ?? 0),
+                    brl_24h_vol: String(coin.total_volume ?? 0),
+                    brl_market_cap: String(coin.market_cap ?? 0),
+                    formatedPrice: price.format(coin.current_price ?? 0),
+                    formatedMarketCap: priceCompact.format(coin.market_cap ?? 0),
+                    formatedVolume: priceCompact.format(coin.total_volume ?? 0),
+                }
+
+                setCoinData(resultData)
+            } catch (err) {
+                console.error(err)
                 navigate('/')
-                return
+            } finally {
+                setLoading(false)
             }
-
-            const resultData = {
-                ...coin,
-                formatedPrice: price.format(Number(coin.brl ?? 0)),
-                formatedMarketCap: priceCompact.format(Number(coin.brl_market_cap ?? 0)),
-                formatedVolume: priceCompact.format(Number(coin.brl_24h_vol ?? 0)),
-            }
-
-            setCoinData(resultData)
         }
         getCoin()
     }, [cripto, navigate])
 
+    interface CoinProps {
+        symbol: string
+    }
+
+    interface DataProp {
+        data: CoinProps[]
+    }
+
+    useEffect(() => {
+        async function imgData() {
+            try {
+                const res = await fetch(
+                    'https://rest.coincap.io/v3/assets?limit=10&offset=0&apiKey=fbf456fe3c49b2e069911557a8059abf15856fcf63e59ad6421cc3a4af1dd16c'
+                )
+                if (!res.ok) throw new Error('Erro na requisição CoinCap')
+                const json = (await res.json()) as DataProp
+                const coinsData = json.data ?? []
+                // loga cada símbolo no console
+                coinsData.forEach(c => console.log(c.symbol))
+            } catch (err) {
+                console.error(err)
+            }
+        }
+        imgData()
+    }, [])
+
+    if (loading) {
+        return (
+            <div className={styles.loading}>
+                <h2 className={styles.title}>Carregando...</h2>
+            </div>
+        )
+    }
+
     return (
-        <div>
+        <div className={styles.card}>
+            <div className={styles.cardHeader}>
+                <img
+                    src={`https://assets.coincap.io/assets/icons/${(symbol ?? cripto ?? '').toLowerCase()}@2x.png`}
+                    alt="Logo Cripto"
+                    className={styles.logo}
+/>
+                <span className={styles.title}>{coinName ?? cripto}</span><br />
+
+            </div>
+            <div className={styles.info}>
+                <span className={styles.info}><b>Preço:</b> {coinData?.formatedPrice}</span><br />
+                <span className={styles.info}><b>Valor:</b> {coinData?.formatedMarketCap}</span><br />
+                <span className={styles.info}><b>Volume:</b> {coinData?.formatedVolume}</span>
+            </div>
         </div>
     )
 }
