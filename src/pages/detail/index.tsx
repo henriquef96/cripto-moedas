@@ -107,8 +107,10 @@ export function Detail() {
                 if (!res.ok) throw new Error('Erro na requisição CoinCap')
                 const json = (await res.json()) as DataProp
                 const coinsData = json.data ?? []
-                // loga cada símbolo no console
-                coinsData.forEach(c => console.log(c.symbol))
+                const coin = coinsData.find((c) => c.symbol.toLowerCase() === (symbol ?? '').toLowerCase())
+                if (coin) {
+                    setSymbol(coin.symbol)
+                }
             } catch (err) {
                 console.error(err)
             }
@@ -125,20 +127,22 @@ export function Detail() {
     }
 
     return (
-        <div className={styles.card}>
-            <div className={styles.cardHeader}>
-                <img
-                    src={`https://assets.coincap.io/assets/icons/${(symbol ?? cripto ?? '').toLowerCase()}@2x.png`}
-                    alt="Logo Cripto"
-                    className={styles.logo}
-/>
-                <span className={styles.title}>{coinName ?? cripto}</span><br />
+        <div className={styles.container}>
+            <div className={styles.card}>
+                <div className={styles.cardHeader}>
+                    <img
+                        src={`https://assets.coincap.io/assets/icons/${(symbol ?? cripto ?? '').toLowerCase()}@2x.png`}
+                        alt="Logo Cripto"
+                        className={styles.logo}
+                    />
+                    <span className={styles.title}>{coinName ?? cripto}</span><br />
 
-            </div>
-            <div className={styles.info}>
-                <span className={styles.info}><b>Preço:</b> {coinData?.formatedPrice}</span><br />
-                <span className={styles.info}><b>Valor:</b> {coinData?.formatedMarketCap}</span><br />
-                <span className={styles.info}><b>Volume:</b> {coinData?.formatedVolume}</span>
+                </div>
+                <div className={styles.info}>
+                    <span className={styles.info}><b>Preço:</b> {coinData?.formatedPrice}</span><br />
+                    <span className={styles.info}><b>Valor:</b> {coinData?.formatedMarketCap}</span><br />
+                    <span className={styles.info}><b>Volume:</b> {coinData?.formatedVolume}</span>
+                </div>
             </div>
         </div>
     )

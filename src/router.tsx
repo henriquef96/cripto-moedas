@@ -13,7 +13,7 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: '/detail/:cripto',
+                path: '/cripto-moedas/detail/:cripto',
                 element: <Detail />,
             },
             {
