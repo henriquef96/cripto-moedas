@@ -171,4 +171,16 @@ table td {
     th:last-child {
         border-radius: 0px;
     }
+
+    .logo {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+    }
+
+    .name {
+        display: flex;
+        align-items: normal;
+        gap: 10px;
+    }
 }
