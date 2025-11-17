@@ -68,7 +68,7 @@ export function Home() {
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
         if (!input) return;
-        navigate(`/detail/${input}`);
+        navigate(`/cripto-moedas/detail/${input}`);
     }
 
     function handleLoadMore() {
